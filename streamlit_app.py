@@ -19,7 +19,7 @@ categories = [
     "Wer wird Schauspieler?", "Wer wird Sänger?", "Wer wird Wissenschaftler?",
     "Wer wird Sportler?", "Wer wird Künstler?", "Wer wird Koch?",
     "Wer wird Autor?", "Wer wird Gamer?", "Wer wird Tänzer?", "Wer wird Comedian?",
-    "Wer wird Designer?", "Wer wird Fotograf?", "Wer wird Musiker?", "Wer wird Unternehmer?",
+    "Wer wird Designer?", "Wer wird Fotograf?", "Wer gibt am meisten Geld aus", "Wer wird Musiker?", "Wer wird Unternehmer?",
     "Wer wird Lehrer?", "Wer wird Arzt?", "Wer wird Ingenieur?", "Wer wird am schnellsten obdachlos?",
     "Wer wird Pilot?", "Wer wird Architekt?", "Wer wird Journalist?", "Wer wird Programmierer?",
     "Wer wird Mechaniker?", "Wer wird Friseur?", "Wer wird Landwirt?", "Wer wird Feuerwehrmann?",

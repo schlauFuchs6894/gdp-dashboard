@@ -14,7 +14,7 @@ categories = [
 ]
 candidates = ["rafi", "aric", "laurin", "vali", "lianne", "nerea", "florin", "yann", "nanelia"]
 
-st.title("🎉 Wer wird was? – Umfrage unter Freunden")
+st.title("🎉 Wer wird am ehesten – Umfrage unter Freunden")
 
 num_voters = st.number_input("Wie viele Personen stimmen ab?", min_value=1, step=1)
 

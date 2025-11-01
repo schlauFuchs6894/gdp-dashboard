@@ -11,7 +11,6 @@ tab1, tab2 = st.tabs(["🗳️ Umfrage-Spiel", "🧠 Memory-Spiel"])
 # -------------------------------
 with tab1:
     
-import streamlit as st
 import random
 import time
 
@@ -64,7 +63,6 @@ import time
 # -------------------------------
 with tab2:
     
-import streamlit as st
 import random
 import time
 

@@ -58,46 +58,63 @@ with tab1:
 # TAB 2: Memory-Spiel
 # -------------------------------
 with tab2:
-    st.title("🧠 Memory-Spiel")
+st.title("🧠 Memory-Spiel")
 
-    # Kartenpaare definieren
-    cards = ["🍎", "🍌", "🍇", "🍓", "🍍", "🥝"]
-    cards *= 2
-    if "cards" not in st.session_state:
-        random.shuffle(cards)
-        st.session_state.cards = cards
-        st.session_state.flipped = [False] * len(cards)
-        st.session_state.matched = [False] * len(cards)
-        st.session_state.last_click = None
+# Kartenpaare definieren
+emojis = ["🍎", "🍌", "🍇", "🍓", "🍍", "🥝"]
+cards = emojis * 2
 
-    if st.button("🔄 Memory zurücksetzen"):
-        random.shuffle(cards)
-        st.session_state.cards = cards
-        st.session_state.flipped = [False] * len(cards)
-        st.session_state.matched = [False] * len(cards)
-        st.session_state.last_click = None
+# Initialisierung
+if "cards" not in st.session_state:
+    random.shuffle(cards)
+    st.session_state.cards = cards
+    st.session_state.flipped = [False] * len(cards)
+    st.session_state.matched = [False] * len(cards)
+    st.session_state.last_click = None
+    st.session_state.waiting = False
 
-    # Karten anzeigen
-    for row in range(0, len(st.session_state.cards), 6):
-        cols = st.columns(6)
-        for i in range(6):
-            idx = row + i
-            if idx < len(st.session_state.cards):
-                with cols[i]:
-                    if st.session_state.matched[idx] or st.session_state.flipped[idx]:
-                        st.button(st.session_state.cards[idx], key=f"card_{idx}", disabled=True)
-                    else:
-                        if st.button("❓", key=f"card_{idx}"):
-                            st.session_state.flipped[idx] = True
-                            if st.session_state.last_click is None:
-                                st.session_state.last_click = idx
+# Reset-Button
+if st.button("🔄 Memory zurücksetzen"):
+    random.shuffle(cards)
+    st.session_state.cards = cards
+    st.session_state.flipped = [False] * len(cards)
+    st.session_state.matched = [False] * len(cards)
+    st.session_state.last_click = None
+    st.session_state.waiting = False
+
+# Karten anzeigen
+for row in range(0, len(st.session_state.cards), 6):
+    cols = st.columns(6)
+    for i in range(6):
+        idx = row + i
+        if idx < len(st.session_state.cards):
+            with cols[i]:
+                if st.session_state.matched[idx] or st.session_state.flipped[idx]:
+                    st.button(st.session_state.cards[idx], key=f"card_{idx}", disabled=True)
+                else:
+                    if st.button("❓", key=f"card_{idx}"):
+                        st.session_state.flipped[idx] = True
+                        if st.session_state.last_click is None:
+                            st.session_state.last_click = idx
+                        else:
+                            j = st.session_state.last_click
+                            if st.session_state.cards[idx] == st.session_state.cards[j]:
+                                st.session_state.matched[idx] = True
+                                st.session_state.matched[j] = True
                             else:
-                                j = st.session_state.last_click
-                                if st.session_state.cards[idx] == st.session_state.cards[j]:
-                                    st.session_state.matched[idx] = True
-                                    st.session_state.matched[j] = True
-                                else:
-                                    st.warning("Kein Match!")
-                                    st.session_state.flipped[idx] = False
-                                    st.session_state.flipped[j] = False
-                                st.session_state.last_click = None
+                                st.session_state.waiting = True
+                                st.experimental_rerun()
+
+# Verzögerung bei falschem Paar
+if st.session_state.waiting:
+    time.sleep(1.5)
+    for i in range(len(st.session_state.flipped)):
+        if not st.session_state.matched[i]:
+            st.session_state.flipped[i] = False
+    st.session_state.waiting = False
+    st.session_state.last_click = None
+    st.experimental_rerun()
+
+# Spielende
+if all(st.session_state.matched):
+    st.success("🎉 Alle Paare gefunden! Gut gemacht!")

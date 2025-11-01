@@ -10,6 +10,11 @@ tab1, tab2 = st.tabs(["🗳️ Umfrage-Spiel", "🧠 Memory-Spiel"])
 # TAB 1: Umfrage-Spiel
 # -------------------------------
 with tab1:
+    
+import streamlit as st
+import random
+import time
+
     st.title("🎉 Wer wird am ehesten – Umfrage unter Freunden")
 
     num_candidates = st.number_input("Wie viele Kandidaten gibt es?", min_value=1, max_value=50, step=1)

@@ -63,6 +63,11 @@ import time
 # TAB 2: Memory-Spiel
 # -------------------------------
 with tab2:
+    
+import streamlit as st
+import random
+import time
+
 st.title("🧠 Memory-Spiel")
 
 # Kartenpaare definieren

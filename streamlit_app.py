@@ -50,3 +50,39 @@ if candidates:
                 st.write(f"{i}. {name} – {count} Stimme(n)")
 else:
     st.warning("Bitte gib mindestens einen Kandidatennamen ein.")
+#memory
+# Kartenpaare definieren
+cards = ["🍎", "🍌", "🍇", "🍓", "🍍", "🥝"]
+cards *= 2  # Paare erzeugen
+random.shuffle(cards)
+
+# Session-Status initialisieren
+if "flipped" not in st.session_state:
+    st.session_state.flipped = [False] * len(cards)
+if "matched" not in st.session_state:
+    st.session_state.matched = [False] * len(cards)
+if "last_click" not in st.session_state:
+    st.session_state.last_click = None
+st.title("🧠 Memory-Spiel")
+
+# Karten anzeigen
+for i, card in enumerate(cards):
+    col = st.columns(6)[i % 6]
+    with col:
+        if st.session_state.matched[i] or st.session_state.flipped[i]:
+            st.button(card, key=f"card_{i}", disabled=True)
+        else:
+            if st.button("❓", key=f"card_{i}"):
+                st.session_state.flipped[i] = True
+                if st.session_state.last_click is None:
+                    st.session_state.last_click = i
+                else:
+                    j = st.session_state.last_click
+                    if cards[i] == cards[j]:
+                        st.session_state.matched[i] = True
+                        st.session_state.matched[j] = True
+                    else:
+                        st.warning("Kein Match!")
+                        st.session_state.flipped[i] = False
+                        st.session_state.flipped[j] = False
+                    st.session_state.last_click = None
